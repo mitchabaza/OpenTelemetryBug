@@ -15,18 +15,16 @@ namespace TestCases
         [Test]
         public async Task  HttpSpansShouldHaveCorrectParentWhenRunSynchronously()
         {
-            await Program.Main(args: new String[]{"sync"} );
+            await Program.Main(args: new[]{"sync"} );
 
             DoAsserts(Program.SyncActivities);
-         
 
         }
         [Test]
         public async Task  HttpSpansShouldHaveCorrectParentWhenRunAsynchronously()
         {
-            await Program.Main(args: new string[]{"async"} );
-
-          
+            await Program.Main(args: new[]{"async"} );
+ 
             DoAsserts(Program.AsyncActivities);
 
         }
@@ -42,7 +40,7 @@ namespace TestCases
             Assert.AreEqual(expectedChildSpans,FindChildSpans(activities, rootSpan3) );
         }
 
-        private static int FindChildSpans(IList<Activity> activities, Activity rootSpan1)
+        private static int FindChildSpans(IEnumerable<Activity> activities, Activity rootSpan1)
         {
             return activities.Count(a => a.RootId.Contains(rootSpan1.RootId));
         }

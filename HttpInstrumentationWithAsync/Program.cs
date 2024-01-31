@@ -51,7 +51,7 @@ namespace HttpInstrumentationWithAsync
                 .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("Program", serviceVersion: "1.0.0"))
                 .AddSource(nameof(Program)).AddConsoleExporter()
                 .AddInMemoryExporter(Activities)
-             //   .AddOtlpExporter(s=>s.Endpoint = new Uri(  $"http://localhost:4317")) //uncomment to send traces to Jaeger All in One
+                .AddOtlpExporter(s=>s.Endpoint = new Uri(  $"http://localhost:4317")) //uncomment to send traces to Jaeger All in One
                 .Build();
         }
     }

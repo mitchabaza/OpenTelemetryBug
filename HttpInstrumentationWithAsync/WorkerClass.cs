@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
@@ -19,22 +21,20 @@ namespace HttpInstrumentationWithAsync
 
         public async Task StartAsync()
         {
-           
-            var task1 = CallPostManEcho("10");
-            var task2 = CallPostManEcho("20");
-            var task3 = CallPostManEcho("30");
-            await Task.WhenAll(task1, task2, task3).ConfigureAwait(true);
+            await Task.WhenAll(CallPostManEcho("10"),CallPostManEcho("20"),CallPostManEcho("30")).ConfigureAwait(true);
         }
 
         public void StartSync()
         {
-            _ = CallPostManEcho("10").Result;
-            _ = CallPostManEcho("20").Result;
-            _ = CallPostManEcho("30").Result;
+           
+            _ =  CallPostManEcho("10").Result;
+            _ =  CallPostManEcho("20").Result;
+            _ =  CallPostManEcho("30").Result;
+            
         }
 
-       
-     private async Task<string> CallPostManEcho(string value)
+      
+        private async Task<string> CallPostManEcho(string value)
         {
             using var activity = ActivitySource.StartActivity($"{nameof(CallPostManEcho)}-{value}");
             {
@@ -47,7 +47,6 @@ namespace HttpInstrumentationWithAsync
 
         private async Task<string> CallRestApi(string uri)
         {
-             
             using var httpResponse = await _httpClient.GetAsync(uri);
 
             httpResponse.EnsureSuccessStatusCode();
